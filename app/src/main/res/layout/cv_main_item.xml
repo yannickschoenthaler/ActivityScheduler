@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="@dimen/cv_elevation"
+    card_view:cardCornerRadius="@dimen/cv_corner_radius"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_cvpicture"
+            android:layout_height="@dimen/cv_image_height"
+            android:layout_width="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/nature1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_footer"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:padding="@dimen/cv_action_spacing"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_cvpicture">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_text"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cl_footer">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Hallo"
+                    android:textAppearance="@style/Cv_Title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_actions"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cv_spacing_text_actions"
+                android:layout_width="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_text">
+
+                <ImageButton
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/ib_edit"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/cv_action_spacing"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_edit_gray_24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/ib_delete"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/cv_action_spacing"
+                    android:layout_marginRight="@dimen/cv_action_spacing"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_delete_gray_24dp"
+                    app:layout_constraintLeft_toRightOf="@id/ib_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Switch
+                    android:id="@+id/sw_activate"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/cv_action_spacing"
+                    app:layout_constraintLeft_toRightOf="@id/ib_delete"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

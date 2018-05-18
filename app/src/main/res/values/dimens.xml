@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!--CardView-->
+    <dimen name="cv_elevation">8dp</dimen>
+    <dimen name="cv_corner_radius">2dp</dimen>
+    <dimen name="cv_image_height">194dp</dimen>
+    <dimen name="cv_action_spacing">16dp</dimen>
+    <dimen name="cv_title_top_spacing">28dp</dimen>
+    <dimen name="cv_title_size">21sp</dimen>
+    <dimen name="cv_spacing_text_actions">24dp</dimen>
+</resources>
