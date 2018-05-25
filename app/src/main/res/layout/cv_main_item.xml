@@ -1,95 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    app:cardUseCompatPadding="true"
     app:cardElevation="@dimen/cv_elevation"
-    card_view:cardCornerRadius="@dimen/cv_corner_radius"
+    app:cardUseCompatPadding="true"
     app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    card_view:cardCornerRadius="@dimen/cv_corner_radius">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_cvpicture"
-            android:layout_height="@dimen/cv_image_height"
             android:layout_width="wrap_content"
+            android:layout_height="@dimen/cv_image_height"
             android:scaleType="centerCrop"
             android:src="@drawable/nature1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_footer"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:padding="@dimen/cv_action_spacing"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_cvpicture">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_text"
-                android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cl_footer">
 
                 <TextView
                     android:id="@+id/tv_title"
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
-                    android:text="Hallo"
-                    android:textAppearance="@style/Cv_Title"
+                    android:layout_height="wrap_content"
+                    android:text="Hello"
+                    style="@style/TextAppearance.AppCompat.Title"
+
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_actions"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/cv_spacing_text_actions"
-                android:layout_width="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_text">
-
-                <ImageButton
-                    android:background="?android:attr/selectableItemBackground"
-                    android:id="@+id/ib_edit"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/cv_action_spacing"
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
-                    android:src="@drawable/ic_edit_gray_24dp"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:text="@string/cv_button_edit_string"
+                    android:id="@+id/bt_edit"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                <ImageButton
-                    android:background="?android:attr/selectableItemBackground"
-                    android:id="@+id/ib_delete"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/cv_action_spacing"
-                    android:layout_marginRight="@dimen/cv_action_spacing"
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
-                    android:src="@drawable/ic_delete_gray_24dp"
-                    app:layout_constraintLeft_toRightOf="@id/ib_edit"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    app:layout_constraintLeft_toRightOf="@+id/bt_edit"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/cv_button_delete_string"
+                    app:strokeWidth="@dimen/cv_button_stroke_width"
+                    app:strokeColor="@color/button_background"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/bt_delete"/>
 
                 <Switch
                     android:id="@+id/sw_activate"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/cv_action_spacing"
-                    app:layout_constraintLeft_toRightOf="@id/ib_delete"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/bt_delete"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

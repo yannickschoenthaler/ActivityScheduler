@@ -10,4 +10,6 @@
     <dimen name="cv_title_top_spacing">28dp</dimen>
     <dimen name="cv_title_size">21sp</dimen>
     <dimen name="cv_spacing_text_actions">24dp</dimen>
+    <dimen name="cv_button_spacing">8dp</dimen>
+    <dimen name="cv_button_stroke_width">2dp</dimen>
 </resources>

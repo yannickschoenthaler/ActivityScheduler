@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Activity Scheduler</string>
+    <string name="cv_button_edit_string">EDIT</string>
+    <string name="cv_button_delete_string">DELETE</string>
+    <string name="menu_save_text">SAVE</string>
+    <string name="delete_card">Delete %1$s?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="card_extra">card</string>
 </resources>

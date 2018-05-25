@@ -1,6 +1,10 @@
 package com.example.yannick.activityscheduler.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.Card;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -26,7 +31,7 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
         this.cardList.add(c);
     }
 
-    public void removeItem(Card c){
+    public void removeItem(Card c) {
         this.cardList.remove(c);
     }
 
@@ -36,11 +41,39 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     }
 
     @Override
-    public void onBindViewHolder(final CardViewHolder cardViewHolder, int i) {
-        final Card c = cardList.get(i);
+    public void onBindViewHolder(final CardViewHolder cardViewHolder, final int position) {
+        final Context context = cardViewHolder.itemView.getContext();
+        final Card c = cardList.get(position);
         cardViewHolder.title.setText(c.title);
         cardViewHolder.activated.setChecked(c.activated);
         cardViewHolder.picture.setImageBitmap(c.picture);
+
+        cardViewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cardViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage(context.getString(R.string.delete_card, c.title))
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                cardList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .create();
+
+                alertDialog.show();
+
+            }
+        });
     }
 
     @Override
@@ -56,16 +89,16 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
         protected TextView title;
         protected Switch activated;
         protected ImageView picture;
-        protected ImageButton edit;
-        protected ImageButton delete;
+        protected MaterialButton edit;
+        protected MaterialButton delete;
 
         public CardViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.tv_title);
             activated = (Switch) v.findViewById(R.id.sw_activate);
             picture = (ImageView) v.findViewById(R.id.iv_cvpicture);
-            edit = (ImageButton) v.findViewById(R.id.ib_edit);
-            delete = (ImageButton) v.findViewById(R.id.ib_delete);
+            edit = (MaterialButton) v.findViewById(R.id.bt_edit);
+            delete = (MaterialButton) v.findViewById(R.id.bt_delete);
         }
     }
 }

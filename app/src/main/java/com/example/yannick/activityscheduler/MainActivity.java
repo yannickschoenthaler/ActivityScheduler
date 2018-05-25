@@ -1,39 +1,44 @@
 package com.example.yannick.activityscheduler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvMainAdapter;
 import com.example.yannick.activityscheduler.model.Card;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recList = null;
-    LinearLayoutManager layoutManager = null;
-    RvMainAdapter cardAdapter = null;
+    private final int ADD_DIALOG_RC = 1;
+    private RecyclerView recList = null;
+    private LinearLayoutManager layoutManager = null;
+    private RvMainAdapter cardAdapter = null;
+    private ArrayList<Card> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        recList = (RecyclerView) findViewById(R.id.rv_main);
+        recList = findViewById(R.id.rv_main);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(layoutManager);
 
-        cardAdapter = new RvMainAdapter(createList(1));
+        items = createList(1);
+        cardAdapter = new RvMainAdapter(items);
         recList.setAdapter(cardAdapter);
     }
 
@@ -64,8 +69,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fab_add_click(View view) {
-        cardAdapter.addItem(new Card("Neues bims " + cardAdapter.getItemCount(), false, loadBitmap()));
-        cardAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "New Card added", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AddDialog.class);
+        startActivityForResult(intent, ADD_DIALOG_RC);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case ADD_DIALOG_RC: {
+                if(resultCode == Activity.RESULT_OK){
+                    Serializable object = data.getSerializableExtra(getString(R.string.card_extra));
+                    if(object instanceof Card){
+                        items.add((Card)object);
+                        cardAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
