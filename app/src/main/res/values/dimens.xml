@@ -12,4 +12,6 @@
     <dimen name="cv_spacing_text_actions">24dp</dimen>
     <dimen name="cv_button_spacing">8dp</dimen>
     <dimen name="cv_button_stroke_width">2dp</dimen>
+
+    <dimen name="et_corner_radius_0">0dp</dimen>
 </resources>
