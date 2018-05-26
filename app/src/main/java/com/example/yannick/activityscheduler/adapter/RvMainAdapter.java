@@ -44,9 +44,9 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     public void onBindViewHolder(final CardViewHolder cardViewHolder, final int position) {
         final Context context = cardViewHolder.itemView.getContext();
         final Card c = cardList.get(position);
-        cardViewHolder.title.setText(c.title);
-        cardViewHolder.activated.setChecked(c.activated);
-        cardViewHolder.picture.setImageBitmap(c.picture);
+        cardViewHolder.title.setText(c.getTitle());
+        cardViewHolder.activated.setChecked(c.isActivated());
+        cardViewHolder.picture.setImageBitmap(c.getPicture());
 
         cardViewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,7 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context)
-                        .setMessage(context.getString(R.string.delete_card, c.title))
+                        .setMessage(context.getString(R.string.delete_card, c.getTitle()))
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

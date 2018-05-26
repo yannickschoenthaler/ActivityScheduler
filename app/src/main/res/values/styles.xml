@@ -21,4 +21,14 @@
         <item name="android:textSize">@dimen/cv_title_size</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="Divider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="DialogTitle">
+        <item name="android:textSize">@dimen/dialog_title_textsize</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

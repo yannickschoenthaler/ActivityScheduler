@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Card> result = new ArrayList<Card>();
         for (int i = 1; i <= size; i++) {
             final Card c = new Card();
-            c.title = "Titel " + i;
-            c.activated = true;
-            c.picture = loadBitmap();
+            c.setTitle("Titel " + i);
+            c.setActivated(true);
+            c.setPicture(loadBitmap());
 
             result.add(c);
         }

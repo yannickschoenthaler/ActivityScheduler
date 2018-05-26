@@ -14,4 +14,8 @@
     <dimen name="cv_button_stroke_width">2dp</dimen>
 
     <dimen name="et_corner_radius_0">0dp</dimen>
+
+    <dimen name="fullscreen_dialog_padding">16dp</dimen>
+
+    <dimen name="dialog_title_textsize">24sp</dimen>
 </resources>
