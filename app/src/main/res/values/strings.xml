@@ -8,6 +8,7 @@
     <string name="no">No</string>
     <string name="card_extra">card</string>
     <string name="add_dialog_title">Add activity</string>
+    <string name="add_dialog_name_hint">Activity Name</string>
 
     <string-array name="custom_activitie_types">
         <item name="bluetooth">Bluetooth</item>

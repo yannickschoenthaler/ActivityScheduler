@@ -13,8 +13,10 @@ import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
 import com.example.yannick.activityscheduler.model.CustomActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -49,7 +51,7 @@ public class AddDialog extends AppCompatActivity {
             }
         });
 
-        card = new Card("Test", true, null);
+        card = new Card("", true, null);
 
         rv_activities = findViewById(R.id.rv_activities);
         rv_layout_manager = new LinearLayoutManager(AddDialog.this);
@@ -59,20 +61,20 @@ public class AddDialog extends AppCompatActivity {
         rv_activities.setAdapter(rv_add_dialog_adapter);
     }
 
-    public void fab_add_activity_click(View view){
+    public void fab_add_activity_click(View view) {
         ArrayList<FloatingActionButton> fabs = new ArrayList<>();
         fabs.add((FloatingActionButton) findViewById(R.id.fab_add_airplane));
         fabs.add((FloatingActionButton) findViewById(R.id.fab_add_bluetooth));
         fabs.add((FloatingActionButton) findViewById(R.id.fab_add_ringtone));
         fabs.add((FloatingActionButton) findViewById(R.id.fab_add_wifi));
 
-        FloatingActionButton fab_add_activity = (FloatingActionButton)view;
+        FloatingActionButton fab_add_activity = (FloatingActionButton) view;
 
-        for(FloatingActionButton fab : fabs){
-            if(fab_menu_opened){
+        for (FloatingActionButton fab : fabs) {
+            if (fab_menu_opened) {
                 fab.setVisibility(View.GONE);
 
-            }else{
+            } else {
                 fab.setVisibility(View.VISIBLE);
 
             }
@@ -97,9 +99,14 @@ public class AddDialog extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_save: {
                 Intent intent = new Intent(AddDialog.this, MainActivity.class);
+
+                //Get Cardinformation
+                String title = UUID.randomUUID().toString();
+                card.setTitle(title);
+
                 intent.putExtra(getString(R.string.card_extra), card);
 
                 setResult(Activity.RESULT_OK, intent);
