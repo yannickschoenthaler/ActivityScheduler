@@ -11,6 +11,8 @@
     <string name="add_dialog_name_hint">Activity Name</string>
     <string name="undo">Undo</string>
     <string name="activity_deleted">1 activity deleted</string>
+    <string name="status_text">Status of %1$s (On/Off):</string>
+
 
     <string-array name="custom_activity_types">
         <item name="bluetooth">Bluetooth</item>

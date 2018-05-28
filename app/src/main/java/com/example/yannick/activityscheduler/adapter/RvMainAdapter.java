@@ -94,11 +94,11 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
 
         public CardViewHolder(View v) {
             super(v);
-            title = (TextView) v.findViewById(R.id.tv_title);
-            activated = (Switch) v.findViewById(R.id.sw_activate);
-            picture = (ImageView) v.findViewById(R.id.iv_cvpicture);
-            edit = (MaterialButton) v.findViewById(R.id.bt_edit);
-            delete = (MaterialButton) v.findViewById(R.id.bt_delete);
+            title = v.findViewById(R.id.tv_title);
+            activated = v.findViewById(R.id.sw_activate);
+            picture = v.findViewById(R.id.iv_cvpicture);
+            edit = v.findViewById(R.id.bt_edit);
+            delete = v.findViewById(R.id.bt_delete);
         }
     }
 }

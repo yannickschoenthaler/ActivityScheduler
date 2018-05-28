@@ -189,20 +189,20 @@ public class AddDialog extends AppCompatActivity {
     }
 
     private int getTypeFromId(int id) {
-        int type = 0;
+        int type = ActivityTypes.BLUETOOTH;
 
         switch (id) {
             case R.id.fab_add_wifi: {
 
-                type = 3;
+                type = ActivityTypes.WIFI;
                 break;
             }
             case R.id.fab_add_airplane: {
-                type = 1;
+                type = ActivityTypes.AIRPLANE;
                 break;
             }
             case R.id.fab_add_ringtone: {
-                type = 2;
+                type = ActivityTypes.RINGTONE;
                 break;
             }
         }
@@ -213,16 +213,16 @@ public class AddDialog extends AppCompatActivity {
     private int getIdFromType(int type) {
         int id = R.id.fab_add_bluetooth;
         switch (type) {
-            case 3: {
+            case ActivityTypes.WIFI: {
 
                 id = R.id.fab_add_wifi;
                 break;
             }
-            case 1: {
+            case ActivityTypes.AIRPLANE: {
                 id = R.id.fab_add_airplane;
                 break;
             }
-            case 2: {
+            case ActivityTypes.RINGTONE: {
                 id = R.id.fab_add_ringtone;
                 break;
             }
