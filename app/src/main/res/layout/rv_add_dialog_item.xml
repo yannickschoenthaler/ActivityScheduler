@@ -44,6 +44,35 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toRightOf="@id/cl_item"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#dd2c00">
+
+        <ImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_delete_white_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/delete_icon"
+            android:text="DELETE"
+            android:textColor="#fff"
+            android:textSize="13dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <View
         style="@style/Divider"
         android:layout_width="0dp"

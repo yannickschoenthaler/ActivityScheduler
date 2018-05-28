@@ -1,34 +1,41 @@
 package com.example.yannick.activityscheduler;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
 import com.example.yannick.activityscheduler.model.CustomActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AddDialog extends AppCompatActivity {
     private Toolbar toolbar;
+    private ConstraintLayout constraintLayout;
     private Card card;
     private RecyclerView rv_activities;
     private RvAddDialogAdapter rv_add_dialog_adapter;
@@ -39,7 +46,8 @@ public class AddDialog extends AppCompatActivity {
     private FloatingActionButton bluetoothButton;
     private FloatingActionButton ringtoneButton;
     private FloatingActionButton wifiButton;
-    private ArrayList<FloatingActionButton> fabs;
+    private ArrayList<FloatingActionButton> visibleFabs;
+    private ArrayList<FloatingActionButton> allFabs;
     private boolean fab_menu_opened = false;
 
     @Override
@@ -53,18 +61,30 @@ public class AddDialog extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //ConstraintLayout-INIT and OnClick
+        constraintLayout = findViewById(R.id.cl_dialog);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fab_menu_opened = false;
+                updateFabsMenuHiddenVisible();
+            }
+        });
+
         //FAB-INIT
         airplaneButton = findViewById(R.id.fab_add_airplane);
         bluetoothButton = findViewById(R.id.fab_add_bluetooth);
         ringtoneButton = findViewById(R.id.fab_add_ringtone);
         wifiButton = findViewById(R.id.fab_add_wifi);
 
-        //Add fabs to arraylist
-        fabs = new ArrayList<>();
-        fabs.add(airplaneButton);
-        fabs.add(bluetoothButton);
-        fabs.add(ringtoneButton);
-        fabs.add(wifiButton);
+        //Add visibleFabs to arraylist
+        visibleFabs = new ArrayList<>();
+        visibleFabs.add(airplaneButton);
+        visibleFabs.add(bluetoothButton);
+        visibleFabs.add(ringtoneButton);
+        visibleFabs.add(wifiButton);
+
+        allFabs = visibleFabs;
 
         toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,37 +114,74 @@ public class AddDialog extends AppCompatActivity {
             }
 
             @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                // Draw the red delete background
+                View itemView = viewHolder.itemView;
+                float itemHeight = itemView.getBottom() - itemView.getTop();
+                boolean isCanceled = dX == 0f && !isCurrentlyActive;
+                Drawable icon = ContextCompat.getDrawable(AddDialog.this, R.drawable.ic_delete_white_24dp);
+                int intrinsicHeight = icon.getIntrinsicHeight();
+                int intrinsicWidth = icon.getIntrinsicWidth();
+
+                if (isCanceled) {
+                    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    paint.setColor(Color.TRANSPARENT);
+                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+                    paint.setAntiAlias(true);
+
+                    c.drawRect(itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(),
+                            (float) itemView.getBottom(), paint);
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+
+                ColorDrawable background = new ColorDrawable();
+                background.setColor(resources.getColor(R.color.red));
+                background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                background.draw(c);
+
+                // Calculate position of delete icon
+                int deleteIconTop = (int) (itemView.getTop() + (itemHeight - intrinsicHeight) / 2);
+                int deleteIconMargin = (int) ((itemHeight - intrinsicHeight) / 2);
+                int deleteIconLeft = itemView.getRight() - deleteIconMargin - intrinsicWidth;
+                int deleteIconRight = itemView.getRight() - deleteIconMargin;
+                int deleteIconBottom = deleteIconTop + intrinsicHeight;
+
+                // Draw the delete icon
+                icon.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom);
+                icon.draw(c);
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+                return super.convertToAbsoluteDirection(flags, layoutDirection);
+            }
+
+            @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
                     final CustomActivity selectedItem = rv_add_dialog_adapter.getItem(viewHolder.getAdapterPosition());
-                    Resources resources = getResources();
-                    String[] types = resources.getStringArray(R.array.custom_activity_types);
+                    card.removeActivity(selectedItem);
+                    rv_add_dialog_adapter.notifyDataSetChanged();
 
-                    AlertDialog deleteDialog = new AlertDialog.Builder(AddDialog.this)
-                            .setMessage(getString(R.string.delete_card, types[selectedItem.getType()]))
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    card.removeActivity(selectedItem);
-                                    rv_add_dialog_adapter.notifyDataSetChanged();
+                    final FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
+                    visibleFabs.add(fab_to_insert);
+                    updateFabs();
 
-                                    FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
-                                    fabs.add(fab_to_insert);
-                                    updateFabs();
-                                }
-                            })
-                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    rv_add_dialog_adapter.notifyDataSetChanged();
-                                }
-                            })
-                            .create();
-
-                    deleteDialog.show();
-
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted), Snackbar.LENGTH_SHORT);
+                    snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            visibleFabs.remove(fab_to_insert);
+                            card.addActivity(selectedItem);
+                            rv_add_dialog_adapter.notifyDataSetChanged();
+                            updateFabsMenuHiddenVisible();
+                        }
+                    });
+                    snackbar.show();
                 }
-
             }
         };
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rv_activities);
@@ -174,14 +231,13 @@ public class AddDialog extends AppCompatActivity {
         return id;
     }
 
-    private void updateFabs(){
-        for (FloatingActionButton fab : fabs) {
-            if (fab_menu_opened) {
-                fab.setVisibility(View.GONE);
+    private void updateFabs() {
+        for (FloatingActionButton fab : allFabs) {
+            fab.setVisibility(View.GONE);
+        }
 
-            } else {
-                fab.setVisibility(View.VISIBLE);
-            }
+        for (FloatingActionButton fab : visibleFabs) {
+            fab.setVisibility(View.VISIBLE);
         }
     }
 
@@ -190,7 +246,7 @@ public class AddDialog extends AppCompatActivity {
 
         int type = getTypeFromId(fab.getId());
 
-        fabs.remove(fab);
+        visibleFabs.remove(fab);
         card.addActivity(new CustomActivity(type, null));
         rv_add_dialog_adapter.notifyDataSetChanged();
         fab.setVisibility(View.GONE);
@@ -199,7 +255,7 @@ public class AddDialog extends AppCompatActivity {
     public void fab_add_activity_click(View view) {
         FloatingActionButton fab_add_activity = (FloatingActionButton) view;
 
-        updateFabs();
+        updateFabsMenuHiddenVisible();
 
         if (fab_menu_opened) {
             fab_add_activity.setImageDrawable(resources.getDrawable(R.drawable.ic_event_white_24dp));
@@ -208,6 +264,17 @@ public class AddDialog extends AppCompatActivity {
         }
 
         fab_menu_opened = !fab_menu_opened;
+    }
+
+    private void updateFabsMenuHiddenVisible() {
+        for (FloatingActionButton fab : visibleFabs) {
+            if (fab_menu_opened) {
+                fab.setVisibility(View.GONE);
+
+            } else {
+                fab.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
