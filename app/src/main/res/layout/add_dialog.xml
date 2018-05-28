@@ -38,9 +38,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ti_name"
-        android:paddingLeft="@dimen/fullscreen_dialog_padding"
-        android:paddingRight="@dimen/fullscreen_dialog_padding">
+        app:layout_constraintTop_toBottomOf="@id/ti_name">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
@@ -59,7 +57,9 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/fab_add_wifi"
         android:id="@+id/fab_add_ringtone"
-        android:src="@drawable/ic_volume_up_white_24dp"
+        android:src="@drawable/ic_volume_up_black_24dp"
+        android:backgroundTint="@color/white"
+        android:onClick="fab_activity_click"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="gone"/>
 
@@ -70,17 +70,21 @@
         app:layout_constraintBottom_toTopOf="@id/fab_add_airplane"
         android:id="@+id/fab_add_wifi"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_network_wifi_white_24dp"
+        android:src="@drawable/ic_signal_wifi_4_bar_black_24dp"
+        android:backgroundTint="@color/white"
+        android:onClick="fab_activity_click"
         android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fab_add_airplane"
-        android:src="@drawable/ic_airplanemode_active_white_24dp"
+        android:src="@drawable/ic_airplanemode_active_black_24dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="@dimen/fab_margin"
         app:layout_constraintBottom_toTopOf="@id/fab_add_bluetooth"
+        android:onClick="fab_activity_click"
+        android:backgroundTint="@color/white"
         android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -90,13 +94,15 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_constraintBottom_toTopOf="@+id/fab_add_activity"
         android:id="@+id/fab_add_bluetooth"
-        android:src="@drawable/ic_bluetooth_white_24dp"
+        android:src="@drawable/ic_bluetooth_black_24dp"
+        android:backgroundTint="@color/white"
+        android:onClick="fab_activity_click"
         android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white_24dp"
+        android:src="@drawable/ic_event_white_24dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/fab_margin"

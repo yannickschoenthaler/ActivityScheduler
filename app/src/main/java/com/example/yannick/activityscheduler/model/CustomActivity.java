@@ -1,8 +1,9 @@
 package com.example.yannick.activityscheduler.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class CustomActivity {
+public class CustomActivity implements Serializable {
     private int type = 0; //Bluetooth = 0, Airplane mode = 1, Ringtone = 2 and Wi-Fi = 3
     private Calendar time;
 

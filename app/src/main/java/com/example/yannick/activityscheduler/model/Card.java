@@ -62,4 +62,8 @@ public class Card implements Serializable{
     public void addActivity(CustomActivity activity) {
         this.activities.add(activity);
     }
+
+    public void removeActivity(CustomActivity selectedItem) {
+        activities.remove(selectedItem);
+    }
 }
