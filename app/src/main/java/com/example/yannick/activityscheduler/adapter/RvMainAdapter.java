@@ -62,7 +62,7 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
                 cardList.remove(position);
                 notifyDataSetChanged();
 
-                Snackbar snackbar = Snackbar.make(cardViewHolder.itemView, context.getString(R.string.card_deleted), Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(cardViewHolder.itemView, context.getString(R.string.card_deleted, c.getTitle()), Snackbar.LENGTH_SHORT);
                 snackbar.setAction(context.getString(R.string.undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

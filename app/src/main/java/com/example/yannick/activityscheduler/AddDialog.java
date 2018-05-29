@@ -1,6 +1,7 @@
 package com.example.yannick.activityscheduler;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -48,6 +49,7 @@ public class AddDialog extends AppCompatActivity {
     private FloatingActionButton wifiButton;
     private ArrayList<FloatingActionButton> visibleFabs;
     private ArrayList<FloatingActionButton> allFabs;
+    private String[] activityTypes;
     private boolean fab_menu_opened = false;
 
     @Override
@@ -57,6 +59,9 @@ public class AddDialog extends AppCompatActivity {
         setTitle(getString(R.string.add_dialog_title));
 
         resources = AddDialog.this.getResources();
+
+        //Get ActivityTypes
+        activityTypes = resources.getStringArray(R.array.custom_activity_types);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,7 +109,6 @@ public class AddDialog extends AppCompatActivity {
 
         rv_activities.setLayoutManager(rv_layout_manager);
         rv_activities.setAdapter(rv_add_dialog_adapter);
-
 
         //Swipe to delete
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -170,7 +174,7 @@ public class AddDialog extends AppCompatActivity {
                     visibleFabs.add(fab_to_insert);
                     updateFabs();
 
-                    Snackbar snackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted), Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted, activityTypes[selectedItem.getType()]), Snackbar.LENGTH_SHORT);
                     snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -214,7 +218,6 @@ public class AddDialog extends AppCompatActivity {
         int id = R.id.fab_add_bluetooth;
         switch (type) {
             case ActivityTypes.WIFI: {
-
                 id = R.id.fab_add_wifi;
                 break;
             }

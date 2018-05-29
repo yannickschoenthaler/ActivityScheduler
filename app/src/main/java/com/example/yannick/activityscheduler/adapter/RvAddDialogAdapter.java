@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.RvAddDialogViewHolder> {
 
     private ArrayList<CustomActivity> activities;
+    private String[] activityTypes;
     private boolean isExpanded = false;
 
     public RvAddDialogAdapter(ArrayList<CustomActivity> activities) {
@@ -44,11 +45,11 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
         final CustomActivity activity = activities.get(position);
         Context context = holder.itemView.getContext();
         Resources resources = context.getResources();
-        String[] types = resources.getStringArray(R.array.custom_activity_types);
+        activityTypes = resources.getStringArray(R.array.custom_activity_types);
 
-        holder.tv_type.setText(types[activity.getType()]);
+        holder.tv_type.setText(activityTypes[activity.getType()]);
 
-        holder.tv_status.setText(context.getString(R.string.status_text, types[activity.getType()]));
+        holder.tv_status.setText(context.getString(R.string.status_text, activityTypes[activity.getType()]));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
