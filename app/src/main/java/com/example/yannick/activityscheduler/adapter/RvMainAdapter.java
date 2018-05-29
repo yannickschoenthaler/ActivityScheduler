@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.Card;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -58,20 +59,18 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
         cardViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(context)
-                        .setMessage(context.getString(R.string.delete_card, c.getTitle()))
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                cardList.remove(position);
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, null)
-                        .create();
+                cardList.remove(position);
+                notifyDataSetChanged();
 
-                alertDialog.show();
-
+                Snackbar snackbar = Snackbar.make(cardViewHolder.itemView, context.getString(R.string.card_deleted), Snackbar.LENGTH_SHORT);
+                snackbar.setAction(context.getString(R.string.undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cardList.add(c);
+                        notifyDataSetChanged();
+                    }
+                });
+                snackbar.show();
             }
         });
     }

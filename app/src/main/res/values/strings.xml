@@ -12,6 +12,7 @@
     <string name="undo">Undo</string>
     <string name="activity_deleted">1 activity deleted</string>
     <string name="status_text">Status of %1$s (On/Off):</string>
+    <string name="card_deleted">1 card deleted</string>
 
 
     <string-array name="custom_activity_types">
