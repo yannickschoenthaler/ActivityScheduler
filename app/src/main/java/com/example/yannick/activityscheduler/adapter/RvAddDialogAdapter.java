@@ -51,7 +51,8 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 
         holder.tv_status.setText(context.getString(R.string.status_text, activityTypes[activity.getType()]));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        holder.cl_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isExpanded = !isExpanded;
@@ -62,11 +63,9 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 
                     }else{
                         holder.cl_detail_normal.setVisibility(View.VISIBLE);
-
                     }
 
                     holder.ib_arrow.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-
                 }else{
                     holder.cl_detail_normal.setVisibility(View.GONE);
                     holder.cl_detail_ringtone.setVisibility(View.GONE);
@@ -109,8 +108,7 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
         TextView tv_type, tv_status;
         ImageView tv_activity_icon, ib_arrow;
         Switch sw_status;
-        ConstraintLayout cl_detail_normal, cl_detail_ringtone;
-
+        ConstraintLayout cl_detail_normal, cl_detail_ringtone, cl_item, cl_detail;
         public RvAddDialogViewHolder(View itemView) {
             super(itemView);
 
@@ -121,6 +119,8 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
             ib_arrow = itemView.findViewById(R.id.ib_arrow);
             cl_detail_normal = itemView.findViewById(R.id.cl_detail);
             cl_detail_ringtone = itemView.findViewById(R.id.cl_detail_ringtone);
+            cl_item = itemView.findViewById(R.id.cl_item);
+            cl_detail = itemView.findViewById(R.id.cl_detail);
         }
     }
 }

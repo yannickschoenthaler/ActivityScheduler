@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -51,6 +52,8 @@ public class AddDialog extends AppCompatActivity {
     private FloatingActionButton wifiButton;
     private HashMap<FloatingActionButton, Boolean> fabCollection;
     private String[] activityTypes;
+    private FloatingActionButton fabAddActivity;
+    private Snackbar undoSnackbar;
     private boolean fab_menu_opened = false;
 
     @Override
@@ -67,16 +70,21 @@ public class AddDialog extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Init
+        fabAddActivity = findViewById(R.id.fab_add_activity);
+
+        //Set fabAddActivity OnClickListener
+        fabAddActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (undoSnackbar != null)
+                    undoSnackbar.dismiss();
+                fabMenuToggle();
+            }
+        });
 
         //ConstraintLayout-INIT and OnClick
         constraintLayout = findViewById(R.id.cl_dialog);
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fab_menu_opened = false;
-                updateFabs();
-            }
-        });
 
         //FAB-INIT
         airplaneButton = findViewById(R.id.fab_add_airplane);
@@ -173,10 +181,13 @@ public class AddDialog extends AppCompatActivity {
                     final FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
                     fabCollection.put(fab_to_insert, true);
 
+                    //Close Menu Fab and update other Fabs
+                    fab_menu_opened = true;
+                    fabMenuToggle();
                     updateFabs();
 
-                    Snackbar snackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted, activityTypes[selectedItem.getType()]), Snackbar.LENGTH_SHORT);
-                    snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
+                    undoSnackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted, activityTypes[selectedItem.getType()]), Snackbar.LENGTH_SHORT);
+                    undoSnackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             fabCollection.put(fab_to_insert, false);
@@ -186,7 +197,7 @@ public class AddDialog extends AppCompatActivity {
                             updateFabs();
                         }
                     });
-                    snackbar.show();
+                    undoSnackbar.show();
                 }
             }
         };
@@ -257,17 +268,15 @@ public class AddDialog extends AppCompatActivity {
         fab.setVisibility(View.GONE);
     }
 
-    public void fab_add_activity_click(View view) {
-        FloatingActionButton fab_add_activity = (FloatingActionButton) view;
-
+    public void fabMenuToggle() {
         fab_menu_opened = !fab_menu_opened;
 
         updateFabs();
 
         if (!fab_menu_opened) {
-            fab_add_activity.setImageDrawable(resources.getDrawable(R.drawable.ic_event_white_24dp));
+            fabAddActivity.setImageDrawable(resources.getDrawable(R.drawable.ic_event_white_24dp));
         } else {
-            fab_add_activity.setImageDrawable(resources.getDrawable(R.drawable.ic_close_white_24dp));
+            fabAddActivity.setImageDrawable(resources.getDrawable(R.drawable.ic_close_white_24dp));
         }
     }
 
