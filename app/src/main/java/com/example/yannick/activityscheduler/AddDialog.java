@@ -1,7 +1,7 @@
 package com.example.yannick.activityscheduler;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
@@ -25,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,8 +49,7 @@ public class AddDialog extends AppCompatActivity {
     private FloatingActionButton bluetoothButton;
     private FloatingActionButton ringtoneButton;
     private FloatingActionButton wifiButton;
-    private ArrayList<FloatingActionButton> visibleFabs;
-    private ArrayList<FloatingActionButton> allFabs;
+    private HashMap<FloatingActionButton, Boolean> fabCollection;
     private String[] activityTypes;
     private boolean fab_menu_opened = false;
 
@@ -66,13 +67,14 @@ public class AddDialog extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         //ConstraintLayout-INIT and OnClick
         constraintLayout = findViewById(R.id.cl_dialog);
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fab_menu_opened = false;
-                updateFabsMenuHiddenVisible();
+                updateFabs();
             }
         });
 
@@ -83,13 +85,11 @@ public class AddDialog extends AppCompatActivity {
         wifiButton = findViewById(R.id.fab_add_wifi);
 
         //Add visibleFabs to arraylist
-        visibleFabs = new ArrayList<>();
-        visibleFabs.add(airplaneButton);
-        visibleFabs.add(bluetoothButton);
-        visibleFabs.add(ringtoneButton);
-        visibleFabs.add(wifiButton);
-
-        allFabs = visibleFabs;
+        fabCollection = new HashMap<FloatingActionButton, Boolean>();
+        fabCollection.put(airplaneButton, true);
+        fabCollection.put(bluetoothButton, true);
+        fabCollection.put(ringtoneButton, true);
+        fabCollection.put(wifiButton, true);
 
         toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -171,17 +171,19 @@ public class AddDialog extends AppCompatActivity {
                     rv_add_dialog_adapter.notifyDataSetChanged();
 
                     final FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
-                    visibleFabs.add(fab_to_insert);
+                    fabCollection.put(fab_to_insert, true);
+
                     updateFabs();
 
                     Snackbar snackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted, activityTypes[selectedItem.getType()]), Snackbar.LENGTH_SHORT);
                     snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            visibleFabs.remove(fab_to_insert);
+                            fabCollection.put(fab_to_insert, false);
+
                             card.addActivity(selectedItem);
                             rv_add_dialog_adapter.notifyDataSetChanged();
-                            updateFabsMenuHiddenVisible();
+                            updateFabs();
                         }
                     });
                     snackbar.show();
@@ -235,12 +237,11 @@ public class AddDialog extends AppCompatActivity {
     }
 
     private void updateFabs() {
-        for (FloatingActionButton fab : allFabs) {
-            fab.setVisibility(View.GONE);
-        }
-
-        for (FloatingActionButton fab : visibleFabs) {
-            fab.setVisibility(View.VISIBLE);
+        for (HashMap.Entry<FloatingActionButton, Boolean> entry : fabCollection.entrySet()) {
+            if (entry.getValue() && fab_menu_opened)
+                entry.getKey().setVisibility(View.VISIBLE);
+            else
+                entry.getKey().setVisibility(View.GONE);
         }
     }
 
@@ -249,7 +250,8 @@ public class AddDialog extends AppCompatActivity {
 
         int type = getTypeFromId(fab.getId());
 
-        visibleFabs.remove(fab);
+        fabCollection.put(fab, false);
+
         card.addActivity(new CustomActivity(type, null));
         rv_add_dialog_adapter.notifyDataSetChanged();
         fab.setVisibility(View.GONE);
@@ -258,25 +260,14 @@ public class AddDialog extends AppCompatActivity {
     public void fab_add_activity_click(View view) {
         FloatingActionButton fab_add_activity = (FloatingActionButton) view;
 
-        updateFabsMenuHiddenVisible();
+        fab_menu_opened = !fab_menu_opened;
 
-        if (fab_menu_opened) {
+        updateFabs();
+
+        if (!fab_menu_opened) {
             fab_add_activity.setImageDrawable(resources.getDrawable(R.drawable.ic_event_white_24dp));
         } else {
             fab_add_activity.setImageDrawable(resources.getDrawable(R.drawable.ic_close_white_24dp));
-        }
-
-        fab_menu_opened = !fab_menu_opened;
-    }
-
-    private void updateFabsMenuHiddenVisible() {
-        for (FloatingActionButton fab : visibleFabs) {
-            if (fab_menu_opened) {
-                fab.setVisibility(View.GONE);
-
-            } else {
-                fab.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -291,16 +282,27 @@ public class AddDialog extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save: {
-                Intent intent = new Intent(AddDialog.this, MainActivity.class);
+                ArrayList<CustomActivity> activities = card.getActivities();
 
-                //Get Cardinformation
-                String title = titleInputField.getText().toString();
-                card.setTitle(title);
+                if (activities != null && activities.size() > 0 && titleInputField.getText().length() > 0) {
+                    Intent intent = new Intent(AddDialog.this, MainActivity.class);
 
-                intent.putExtra(getString(R.string.card_extra), card);
+                    //Get Cardinformation
+                    String title = titleInputField.getText().toString();
+                    card.setTitle(title);
 
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                    intent.putExtra(getString(R.string.card_extra), card);
+
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(AddDialog.this)
+                            .setMessage(R.string.add_card_error).setPositiveButton(R.string.ok, null)
+                            .create();
+
+                    alertDialog.show();
+                }
             }
         }
         return super.onOptionsItemSelected(item);
