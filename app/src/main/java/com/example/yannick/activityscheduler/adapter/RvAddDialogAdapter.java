@@ -51,29 +51,27 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 
         holder.tv_status.setText(context.getString(R.string.status_text, activityTypes[activity.getType()]));
 
-
         holder.cl_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isExpanded = !isExpanded;
 
                 if (isExpanded) {
-                    if(activity.getType() == ActivityTypes.RINGTONE){
+                    if (activity.getType() == ActivityTypes.RINGTONE) {
                         holder.cl_detail_ringtone.setVisibility(View.VISIBLE);
 
-                    }else{
+                    } else {
                         holder.cl_detail_normal.setVisibility(View.VISIBLE);
                     }
 
                     holder.ib_arrow.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                }else{
+                } else {
                     holder.cl_detail_normal.setVisibility(View.GONE);
                     holder.cl_detail_ringtone.setVisibility(View.GONE);
                     holder.ib_arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
                 }
             }
         });
-
 
         switch (activity.getType()) {
             //Bluetooth
@@ -104,11 +102,11 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
     }
 
     class RvAddDialogViewHolder extends RecyclerView.ViewHolder {
-
         TextView tv_type, tv_status;
         ImageView tv_activity_icon, ib_arrow;
         Switch sw_status;
         ConstraintLayout cl_detail_normal, cl_detail_ringtone, cl_item, cl_detail;
+
         public RvAddDialogViewHolder(View itemView) {
             super(itemView);
 

@@ -202,7 +202,6 @@ public class AddDialog extends AppCompatActivity {
             }
         };
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rv_activities);
-
     }
 
     private int getTypeFromId(int id) {
