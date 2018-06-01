@@ -18,7 +18,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/Theme.AppCompat.Light" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cl_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingLeft="@dimen/fullscreen_dialog_editText_margin"
+        android:background="@color/colorPrimary">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:hint="@string/add_dialog_name_hint"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:id="@+id/et_activity_title"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@android:color/transparent"
+            android:textCursorDrawable="@null"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
@@ -34,7 +60,7 @@
             android:hint="@string/add_dialog_name_hint"
             android:imeOptions="actionDone"
             android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_activities"
@@ -43,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ti_name">
+        app:layout_constraintTop_toBottomOf="@id/cl_title">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_activities"

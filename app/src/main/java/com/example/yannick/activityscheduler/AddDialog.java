@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
@@ -42,7 +43,7 @@ public class AddDialog extends AppCompatActivity {
     private RecyclerView rv_activities;
     private RvAddDialogAdapter rv_add_dialog_adapter;
     private LinearLayoutManager rv_layout_manager;
-    private TextInputEditText titleInputField;
+    private EditText titleInputField;
     private Resources resources;
     private FloatingActionButton airplaneButton, bluetoothButton, ringtoneButton, wifiButton, fabAddActivity;
     private HashMap<FloatingActionButton, Boolean> fabCollection;
@@ -101,7 +102,7 @@ public class AddDialog extends AppCompatActivity {
             }
         });
 
-        titleInputField = findViewById(R.id.ti_activity_title);
+        titleInputField = findViewById(R.id.et_activity_title);
 
         card = new Card("", true, null);
 

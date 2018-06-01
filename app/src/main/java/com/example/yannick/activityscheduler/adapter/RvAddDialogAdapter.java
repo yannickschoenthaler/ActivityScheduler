@@ -96,10 +96,17 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 
         //TODO handle changes
         if (viewType == ViewType.NORMAL.getValue()) {
-            SimpleViewHolder simpleViewHolder = (SimpleViewHolder) holder;
+            final SimpleViewHolder simpleViewHolder = (SimpleViewHolder) holder;
 
             simpleViewHolder.tv_status.setText(context.getString(R.string.status_text,
                     activityTypes[activityType.getId()]));
+
+            simpleViewHolder.cl_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    simpleViewHolder.sw_status.toggle();
+                }
+            });
 
         } else if (viewType == ViewType.RINGTONE.getValue()) {
             RingtoneViewHolder ringtoneViewHolder = (RingtoneViewHolder) holder;
@@ -107,7 +114,7 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
         }
 
 
-        holder.cl_item.setOnClickListener(new View.OnClickListener() {
+        holder.header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (viewType == ViewType.NORMAL.getValue()) {
@@ -150,12 +157,12 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_type;
         private ImageView iv_activity_icon, ib_arrow;
-        private ConstraintLayout cl_item;
+        private View header;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
 
-            cl_item = itemView.findViewById(R.id.cl_item);
+            header = itemView.findViewById(R.id.header);
             tv_type = itemView.findViewById(R.id.tv_type);
             iv_activity_icon = itemView.findViewById(R.id.iv_activity_icon);
             ib_arrow = itemView.findViewById(R.id.ib_arrow);

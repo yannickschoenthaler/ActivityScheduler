@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <include android:id="@+id/header" layout="@layout/rv_add_dialog_itemheader"/>
+    <include
+        android:id="@+id/header"
+        layout="@layout/rv_add_dialog_itemheader" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_detail"
@@ -15,11 +17,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header">
 
-        <TextView
-            android:id="@+id/tv_ringtone"
+        <ImageView
+            android:id="@+id/iv_ringtone_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_volume_ring"
+            android:src="@drawable/ic_ring_volume_black_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,47 +29,52 @@
             android:id="@+id/ringtoneBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/single_list_item_image_text"
             android:max="100"
             android:progress="50"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/iv_ringtone_volume"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_ringtone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_media"
+        <ImageView
+            android:id="@+id/iv_media_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_volume_media"
+            android:src="@drawable/ic_music_note_black_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ringtoneBar" />
+            app:layout_constraintTop_toBottomOf="@id/iv_ringtone_volume"
+            android:layout_marginTop="@dimen/volume_bars_top_margin"/>
 
         <SeekBar
             android:id="@+id/mediaBar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/single_list_item_image_text"
             android:max="100"
             android:progress="50"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/iv_media_volume"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_media"/>
+            app:layout_constraintTop_toTopOf="@id/iv_media_volume" />
 
-        <TextView
-            android:id="@+id/tv_alarm"
+        <ImageView
+            android:id="@+id/iv_alarm_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_volume_alarm"
+            android:src="@drawable/ic_alarm_black_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mediaBar" />
+            app:layout_constraintTop_toBottomOf="@id/iv_media_volume"
+            android:layout_marginTop="@dimen/volume_bars_top_margin"/>
 
         <SeekBar
             android:id="@+id/alarmBar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/single_list_item_image_text"
             android:max="100"
             android:progress="50"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/iv_alarm_volume"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_alarm"/>
+            app:layout_constraintTop_toTopOf="@id/iv_alarm_volume" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
