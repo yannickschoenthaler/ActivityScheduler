@@ -7,7 +7,7 @@
     <include android:id="@+id/header" layout="@layout/rv_add_dialog_itemheader"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_detail_ringtone"
+        android:id="@+id/cl_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/single_list_item_padding"

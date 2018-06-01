@@ -8,7 +8,7 @@ import java.util.Calendar;
 import static com.example.yannick.activityscheduler.ActivityType.BLUETOOTH;
 
 public class CustomActivity implements Serializable {
-    private boolean isExpanded = false;
+    private boolean isExpanded = true;
     private Calendar time;
     private ActivityType type = BLUETOOTH;
 
