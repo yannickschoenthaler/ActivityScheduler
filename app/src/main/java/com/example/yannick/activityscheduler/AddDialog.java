@@ -15,9 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
@@ -60,7 +58,7 @@ public class AddDialog extends AppCompatActivity {
 
         resources = AddDialog.this.getResources();
 
-        //Get ActivityTypes
+        //Get ActivityType
         activityTypes = resources.getStringArray(R.array.custom_activity_types);
 
         toolbar = findViewById(R.id.toolbar);
@@ -172,7 +170,7 @@ public class AddDialog extends AppCompatActivity {
 
                     rv_add_dialog_adapter.notifyDataSetChanged();
 
-                    final FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
+                    final FloatingActionButton fab_to_insert = findViewById(selectedItem.getType().getFabId());
                     fabCollection.put(fab_to_insert, true);
 
                     //Close Menu Fab and update other Fabs
@@ -180,7 +178,9 @@ public class AddDialog extends AppCompatActivity {
                     fabMenuToggle();
                     updateFabs();
 
-                    undoSnackbar = Snackbar.make(findViewById(R.id.cl_dialog), getString(R.string.activity_deleted, activityTypes[selectedItem.getType()]), Snackbar.LENGTH_SHORT);
+                    undoSnackbar = Snackbar.make(findViewById(R.id.cl_dialog),
+                            getString(R.string.activity_deleted, activityTypes[selectedItem.getType().getId()]),
+                            Snackbar.LENGTH_SHORT);
                     undoSnackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -198,48 +198,6 @@ public class AddDialog extends AppCompatActivity {
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rv_activities);
     }
 
-    private int getTypeFromId(int id) {
-        int type = ActivityTypes.BLUETOOTH;
-
-        switch (id) {
-            case R.id.fab_add_wifi: {
-
-                type = ActivityTypes.WIFI;
-                break;
-            }
-            case R.id.fab_add_airplane: {
-                type = ActivityTypes.AIRPLANE;
-                break;
-            }
-            case R.id.fab_add_ringtone: {
-                type = ActivityTypes.RINGTONE;
-                break;
-            }
-        }
-
-        return type;
-    }
-
-    private int getIdFromType(int type) {
-        int id = R.id.fab_add_bluetooth;
-        switch (type) {
-            case ActivityTypes.WIFI: {
-                id = R.id.fab_add_wifi;
-                break;
-            }
-            case ActivityTypes.AIRPLANE: {
-                id = R.id.fab_add_airplane;
-                break;
-            }
-            case ActivityTypes.RINGTONE: {
-                id = R.id.fab_add_ringtone;
-                break;
-            }
-        }
-
-        return id;
-    }
-
     private void updateFabs() {
         for (HashMap.Entry<FloatingActionButton, Boolean> entry : fabCollection.entrySet()) {
             if (entry.getValue() && fab_menu_opened)
@@ -252,7 +210,7 @@ public class AddDialog extends AppCompatActivity {
     public void fab_activity_click(View view) {
         FloatingActionButton fab = (FloatingActionButton) view;
 
-        int type = getTypeFromId(fab.getId());
+        ActivityType type = ActivityType.valueOfFabId(fab.getId());
 
         fabCollection.put(fab, false);
 

@@ -10,6 +10,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.yannick.activityscheduler.ActivityType;
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.CustomActivity;
 
@@ -53,7 +54,7 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 //                activity.setExpanded(!activity.isExpanded());
 //
 //                if (activity.isExpanded()) {
-//                    if (activity.getType() == ActivityTypes.RINGTONE) {
+//                    if (activity.getIntFromType() == ActivityTypes1.RINGTONE) {
 //                        holder.cl_detail_ringtone.setVisibility(View.VISIBLE);
 //                    } else {
 //                        holder.cl_detail_normal.setVisibility(View.VISIBLE);
@@ -89,8 +90,9 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
         }
 
         public void update(CustomActivity activity) {
-            tv_type.setText(activityTypes[activity.getType()]);
-            tv_activity_icon.setImageResource(activity.getIconResourceId());
+            ActivityType type = activity.getType();
+            tv_type.setText(activityTypes[type.getId()]);
+            tv_activity_icon.setImageResource(type.getIconId());
         }
     }
 
@@ -107,7 +109,8 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
 
         public void update(CustomActivity activity) {
             super.update(activity);
-            tv_status.setText(itemView.getContext().getString(R.string.status_text, activityTypes[activity.getType()]));
+            ActivityType type = activity.getType();
+            tv_status.setText(itemView.getContext().getString(R.string.status_text, activityTypes[type.getId()]));
             // TODO sw_status.setChecked(activity);
         }
     }
