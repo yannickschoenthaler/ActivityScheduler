@@ -16,7 +16,7 @@
     <string name="card_deleted">Card \"%1$s\" deleted</string>
     <string name="add_card_error">Please enter title and add at least one action</string>
 
-    //These Strings are shown in the Activity-Area when u add an Activity
+    <!--These Strings are shown in the Activity-Area when u add an Activity-->
     <string name="activity_volume_ring">Ring</string>
     <string name="activity_volume_media">Media</string>
     <string name="activity_volume_alarm">Alarm</string>

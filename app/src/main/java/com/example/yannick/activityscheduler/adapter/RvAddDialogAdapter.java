@@ -98,6 +98,9 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
         if (viewType == ViewType.NORMAL.getValue()) {
             SimpleViewHolder simpleViewHolder = (SimpleViewHolder) holder;
 
+            simpleViewHolder.tv_status.setText(context.getString(R.string.status_text,
+                    activityTypes[activityType.getId()]));
+
         } else if (viewType == ViewType.RINGTONE.getValue()) {
             RingtoneViewHolder ringtoneViewHolder = (RingtoneViewHolder) holder;
 
