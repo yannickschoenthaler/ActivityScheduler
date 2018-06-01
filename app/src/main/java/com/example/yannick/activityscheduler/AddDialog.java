@@ -46,13 +46,9 @@ public class AddDialog extends AppCompatActivity {
     private LinearLayoutManager rv_layout_manager;
     private TextInputEditText titleInputField;
     private Resources resources;
-    private FloatingActionButton airplaneButton;
-    private FloatingActionButton bluetoothButton;
-    private FloatingActionButton ringtoneButton;
-    private FloatingActionButton wifiButton;
+    private FloatingActionButton airplaneButton, bluetoothButton, ringtoneButton, wifiButton, fabAddActivity;
     private HashMap<FloatingActionButton, Boolean> fabCollection;
     private String[] activityTypes;
-    private FloatingActionButton fabAddActivity;
     private Snackbar undoSnackbar;
     private boolean fab_menu_opened = false;
 
@@ -93,7 +89,7 @@ public class AddDialog extends AppCompatActivity {
         wifiButton = findViewById(R.id.fab_add_wifi);
 
         //Add visibleFabs to arraylist
-        fabCollection = new HashMap<FloatingActionButton, Boolean>();
+        fabCollection = new HashMap<>();
         fabCollection.put(airplaneButton, true);
         fabCollection.put(bluetoothButton, true);
         fabCollection.put(ringtoneButton, true);
@@ -117,6 +113,7 @@ public class AddDialog extends AppCompatActivity {
 
         rv_activities.setLayoutManager(rv_layout_manager);
         rv_activities.setAdapter(rv_add_dialog_adapter);
+
 
         //Swipe to delete
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -167,15 +164,12 @@ public class AddDialog extends AppCompatActivity {
             }
 
             @Override
-            public int convertToAbsoluteDirection(int flags, int layoutDirection) {
-                return super.convertToAbsoluteDirection(flags, layoutDirection);
-            }
-
-            @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
                     final CustomActivity selectedItem = rv_add_dialog_adapter.getItem(viewHolder.getAdapterPosition());
+
                     card.removeActivity(selectedItem);
+
                     rv_add_dialog_adapter.notifyDataSetChanged();
 
                     final FloatingActionButton fab_to_insert = findViewById(getIdFromType(selectedItem.getType()));
