@@ -8,7 +8,7 @@
         android:id="@+id/cl_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/single_list_item_padding"
+        android:padding="?attr/listPreferredItemPaddingLeft"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">

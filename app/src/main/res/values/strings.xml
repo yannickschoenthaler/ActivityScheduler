@@ -20,6 +20,7 @@
     <string name="activity_volume_ring">Ring</string>
     <string name="activity_volume_media">Media</string>
     <string name="activity_volume_alarm">Alarm</string>
+    <string name="daily">Daily</string>
 
     <string-array name="custom_activity_types">
         <item name="bluetooth">Bluetooth</item>
