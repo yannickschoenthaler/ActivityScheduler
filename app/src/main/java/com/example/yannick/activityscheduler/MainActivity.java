@@ -55,24 +55,11 @@ public class MainActivity extends AppCompatActivity {
             c.addActivity(new CustomActivity(ActivityType.BLUETOOTH, null));
             c.addActivity(new CustomActivity(ActivityType.AIRPLANE, null));
             c.addActivity(new CustomActivity(ActivityType.RINGTONE, null));
-            c.setPicture(loadBitmap());
 
             result.add(c);
         }
 
         return result;
-    }
-
-    private Bitmap loadBitmap() {
-        Bitmap bitmap = null;
-        try {
-            //Getting the Bitmap from Gallery
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.nature1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
     }
 
     public void fab_add_click(View view) {

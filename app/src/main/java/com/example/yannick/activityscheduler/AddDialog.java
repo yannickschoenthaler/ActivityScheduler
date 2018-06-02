@@ -104,7 +104,7 @@ public class AddDialog extends AppCompatActivity {
 
         titleInputField = findViewById(R.id.et_activity_title);
 
-        card = new Card("", true, null);
+        card = new Card("", true);
 
         rv_activities = findViewById(R.id.rv_activities);
         rv_layout_manager = new LinearLayoutManager(AddDialog.this);

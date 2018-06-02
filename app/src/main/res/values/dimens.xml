@@ -16,6 +16,7 @@
     <dimen name="fullscreen_dialog_editText_margin">16dp</dimen>
 
     <dimen name="single_list_item_image_text">32dp</dimen>
+    <dimen name="single_list_item_border_text">56dp</dimen>
 
     <dimen name="volume_bars_top_margin">16dp</dimen>
 

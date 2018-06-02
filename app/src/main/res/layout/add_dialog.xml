@@ -4,8 +4,8 @@
     android:id="@+id/cl_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:descendantFocusability="beforeDescendants">
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,29 +19,29 @@
         app:popupTheme="@style/Theme.AppCompat.Light" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/cl_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/colorPrimary"
         android:paddingLeft="@dimen/fullscreen_dialog_editText_margin"
-        android:background="@color/colorPrimary">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <EditText
+            android:id="@+id/et_activity_title"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:hint="@string/add_dialog_name_hint"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:id="@+id/et_activity_title"
-            android:inputType="text"
-            android:imeOptions="actionDone"
             android:background="@android:color/transparent"
-            android:textCursorDrawable="@null"/>
+            android:hint="@string/add_dialog_name_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--<com.google.android.material.textfield.TextInputLayout
@@ -72,48 +72,68 @@
         app:layout_constraintTop_toBottomOf="@id/cl_title">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="?attr/listPreferredItemHeightLarge"
             android:id="@+id/cl_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="?attr/listPreferredItemPaddingLeft"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:padding="?attr/listPreferredItemPaddingLeft">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/iv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:src="@drawable/ic_access_time_gray_24dp"
-                android:id="@+id/iv_time"/>
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
+                android:id="@+id/tv_daily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/iv_time"
                 android:layout_marginLeft="@dimen/single_list_item_image_text"
-                app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/daily"
-                android:id="@+id/tv_daily"
+                android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintBottom_toBottomOf="@id/iv_time"
-                android:textAppearance="?attr/textAppearanceListItem"/>
+                app:layout_constraintLeft_toRightOf="@id/iv_time"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
+                android:id="@+id/sw_daily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/iv_time"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/sw_daily"
-                app:layout_constraintBottom_toBottomOf="@id/iv_time"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/Divider"/>
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/listPreferredItemPaddingLeft"
+                android:textAppearance="?attr/textAppearanceListItem"
+                app:layout_constraintLeft_toLeftOf="@id/tv_daily"
+                app:layout_constraintTop_toBottomOf="@id/tv_daily" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/listPreferredItemPaddingLeft"
+                android:textAppearance="?attr/textAppearanceListItem"
+                app:layout_constraintRight_toRightOf="@id/sw_daily"
+                app:layout_constraintTop_toBottomOf="@+id/sw_daily" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <View
+            style="@style/Divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_time" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_activities"

@@ -13,17 +13,15 @@ import java.util.ArrayList;
 public class Card implements Serializable {
     private String title;
     private boolean activated;
-    private Bitmap picture;
     private ArrayList<CustomActivity> activities = new ArrayList<>();
 
     public Card() {
 
     }
 
-    public Card(String title, boolean isActivated, Bitmap picture) {
+    public Card(String title, boolean isActivated) {
         this.title = title;
         this.activated = isActivated;
-        this.picture = picture;
     }
 
     public static Card fromJSON(JSONObject object) throws JSONException {
@@ -77,14 +75,6 @@ public class Card implements Serializable {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
-    }
-
-    public Bitmap getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Bitmap picture) {
-        this.picture = picture;
     }
 
     public ArrayList<CustomActivity> getActivities() {

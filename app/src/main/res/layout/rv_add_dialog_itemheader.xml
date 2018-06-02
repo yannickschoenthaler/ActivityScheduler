@@ -24,13 +24,13 @@
 
         <TextView
             android:id="@+id/tv_type"
-            style="@style/DialogTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/single_list_item_image_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iv_activity_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="?attr/textAppearanceListItem"/>
 
         <ImageView
             android:id="@+id/ib_arrow"
@@ -42,13 +42,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
