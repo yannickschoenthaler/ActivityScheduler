@@ -13,10 +13,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="CardView" parent="CardView.Light">
-        <item name="cardViewStyle">@style/CardView</item>
-    </style>
-
     <style name="Cv_Title" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">@dimen/cv_title_size</item>
         <item name="android:textStyle">bold</item>

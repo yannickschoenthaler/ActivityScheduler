@@ -2,20 +2,16 @@ package com.example.yannick.activityscheduler;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 
-import com.example.yannick.activityscheduler.adapter.RvPictureAdapter;
 import com.example.yannick.activityscheduler.adapter.RvMainAdapter;
 import com.example.yannick.activityscheduler.model.Card;
 import com.example.yannick.activityscheduler.model.CustomActivity;
@@ -46,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<Card> createList(int size) {
-        ArrayList<Card> result = new ArrayList<Card>();
+        ArrayList<Card> result = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
             final Card c = new Card();
             c.setTitle("Titel " + i);
             c.setActivated(true);
-            c.addActivity(new CustomActivity(ActivityType.WIFI, null));
-            c.addActivity(new CustomActivity(ActivityType.BLUETOOTH, null));
-            c.addActivity(new CustomActivity(ActivityType.AIRPLANE, null));
-            c.addActivity(new CustomActivity(ActivityType.RINGTONE, null));
+            c.addActivity(new CustomActivity(ActivityType.WIFI));
+            c.addActivity(new CustomActivity(ActivityType.BLUETOOTH));
+            c.addActivity(new CustomActivity(ActivityType.AIRPLANE));
+            c.addActivity(new CustomActivity(ActivityType.RINGTONE));
 
             result.add(c);
         }

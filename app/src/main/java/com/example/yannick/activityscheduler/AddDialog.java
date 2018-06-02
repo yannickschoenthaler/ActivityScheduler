@@ -2,6 +2,8 @@ package com.example.yannick.activityscheduler;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -11,22 +13,28 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
 import com.example.yannick.activityscheduler.model.CustomActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,7 +46,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AddDialog extends AppCompatActivity {
     private Toolbar toolbar;
-    private ConstraintLayout constraintLayout;
+    private ConstraintLayout constraintLayout, cl_time, cl_date;
     private Card card;
     private RecyclerView rv_activities;
     private RvAddDialogAdapter rv_add_dialog_adapter;
@@ -50,6 +58,7 @@ public class AddDialog extends AppCompatActivity {
     private String[] activityTypes;
     private Snackbar undoSnackbar;
     private boolean fab_menu_opened = false;
+    private TextView tv_date, tv_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +121,54 @@ public class AddDialog extends AppCompatActivity {
 
         rv_activities.setLayoutManager(rv_layout_manager);
         rv_activities.setAdapter(rv_add_dialog_adapter);
+
+        //TextViews for time and date
+        tv_date = findViewById(R.id.tv_date);
+        tv_time = findViewById(R.id.tv_time);
+        cl_date = findViewById(R.id.cl_date);
+        cl_time = findViewById(R.id.cl_time);
+
+        Locale locale = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = resources.getConfiguration().getLocales().get(0);
+
+        } else {
+            locale = resources.getConfiguration().locale;
+        }
+
+        final Calendar calendar = card.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E, u. MMMM y", locale);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("H:m", locale);
+        tv_date.setText(dateFormat.format(calendar.getTime()));
+        tv_time.setText(timeFormat.format(calendar.getTime()));
+
+        cl_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddDialog.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        card.setDate(year, month, day);
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                datePickerDialog.show();
+            }
+        });
+
+        cl_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddDialog.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                        card.setTime(hour, minute);
+                    }
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
+            }
+        });
 
 
         //Swipe to delete
@@ -215,12 +272,12 @@ public class AddDialog extends AppCompatActivity {
 
         fabCollection.put(fab, false);
 
-        card.addActivity(new CustomActivity(type, null));
+        card.addActivity(new CustomActivity(type));
         rv_add_dialog_adapter.notifyDataSetChanged();
         fab.setVisibility(View.GONE);
     }
 
-    public void fabMenuToggle() {
+    private void fabMenuToggle() {
         fab_menu_opened = !fab_menu_opened;
 
         updateFabs();

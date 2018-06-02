@@ -3,17 +3,12 @@ package com.example.yannick.activityscheduler.adapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.Card;
@@ -52,9 +47,8 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
         });
 
         //Picture RecyclerView
-        int columnCount = activityCount;
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, columnCount);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, activityCount);
         RvPictureAdapter rv_picture_adapter = new RvPictureAdapter(activities);
         cardViewHolder.rv_picture.setLayoutManager(gridLayoutManager);
         cardViewHolder.rv_picture.setAdapter(rv_picture_adapter);

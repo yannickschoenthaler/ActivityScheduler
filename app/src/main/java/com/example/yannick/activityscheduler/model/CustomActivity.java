@@ -6,21 +6,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import static com.example.yannick.activityscheduler.ActivityType.BLUETOOTH;
 
 public class CustomActivity implements Serializable {
     private boolean isExpanded = true;
-    private Calendar time;
     private ActivityType type = BLUETOOTH;
 
     public CustomActivity() {
     }
 
-    public CustomActivity(ActivityType type, Calendar time) {
+    public CustomActivity(ActivityType type) {
         this.type = type;
-        this.time = time;
     }
 
     public ActivityType getType() {
@@ -29,14 +26,6 @@ public class CustomActivity implements Serializable {
 
     public void setType(ActivityType type) {
         this.type = type;
-    }
-
-    public Calendar getTime() {
-        return time;
-    }
-
-    public void setTime(Calendar time) {
-        this.time = time;
     }
 
     public void setExpanded(boolean isExpanded) {
