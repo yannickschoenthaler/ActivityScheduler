@@ -9,20 +9,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 
+import com.example.yannick.activityscheduler.adapter.RvPictureAdapter;
 import com.example.yannick.activityscheduler.adapter.RvMainAdapter;
 import com.example.yannick.activityscheduler.model.Card;
+import com.example.yannick.activityscheduler.model.CustomActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final int ADD_DIALOG_RC = 1;
-    private RecyclerView recList = null;
+    private RecyclerView recList;
     private LinearLayoutManager layoutManager = null;
     private RvMainAdapter cardAdapter = null;
     private ArrayList<Card> items = new ArrayList<>();
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
             final Card c = new Card();
             c.setTitle("Titel " + i);
             c.setActivated(true);
+            c.addActivity(new CustomActivity(ActivityType.WIFI, null));
+            c.addActivity(new CustomActivity(ActivityType.BLUETOOTH, null));
+            c.addActivity(new CustomActivity(ActivityType.AIRPLANE, null));
+            c.addActivity(new CustomActivity(ActivityType.RINGTONE, null));
             c.setPicture(loadBitmap());
 
             result.add(c);

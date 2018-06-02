@@ -1,5 +1,6 @@
 package com.example.yannick.activityscheduler.adapter;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.Card;
+import com.example.yannick.activityscheduler.model.CustomActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -28,14 +30,6 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
         this.cardList = cardList;
     }
 
-    public void addItem(Card c) {
-        this.cardList.add(c);
-    }
-
-    public void removeItem(Card c) {
-        this.cardList.remove(c);
-    }
-
     @Override
     public int getItemCount() {
         return cardList.size();
@@ -45,9 +39,10 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     public void onBindViewHolder(final CardViewHolder cardViewHolder, final int position) {
         final Context context = cardViewHolder.itemView.getContext();
         final Card c = cardList.get(position);
+        ArrayList<CustomActivity> activities = c.getActivities();
+        int activityCount = activities.size();
         cardViewHolder.title.setText(c.getTitle());
         cardViewHolder.activated.setChecked(c.isActivated());
-        cardViewHolder.picture.setImageBitmap(c.getPicture());
 
         cardViewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +50,14 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
 
             }
         });
+
+        //Picture RecyclerView
+        int columnCount = activityCount;
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, columnCount);
+        RvPictureAdapter rv_picture_adapter = new RvPictureAdapter(activities);
+        cardViewHolder.rv_picture.setLayoutManager(gridLayoutManager);
+        cardViewHolder.rv_picture.setAdapter(rv_picture_adapter);
 
         cardViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +90,19 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         protected TextView title;
         protected Switch activated;
-        protected ImageView picture;
         protected MaterialButton edit;
         protected MaterialButton delete;
+        protected RecyclerView rv_picture;
+
 
         public CardViewHolder(View v) {
             super(v);
             title = v.findViewById(R.id.tv_title);
             activated = v.findViewById(R.id.sw_activate);
-            picture = v.findViewById(R.id.iv_cvpicture);
             edit = v.findViewById(R.id.bt_edit);
             delete = v.findViewById(R.id.bt_delete);
+            rv_picture = v.findViewById(R.id.rv_picture);
+
         }
     }
 }
