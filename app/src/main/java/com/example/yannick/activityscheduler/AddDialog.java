@@ -19,10 +19,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvAddDialogAdapter;
 import com.example.yannick.activityscheduler.model.Card;
@@ -59,6 +62,7 @@ public class AddDialog extends AppCompatActivity {
     private Snackbar undoSnackbar;
     private boolean fab_menu_opened = false;
     private TextView tv_date, tv_time;
+    private Switch sw_daily;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +143,7 @@ public class AddDialog extends AppCompatActivity {
 
         final Calendar calendar = card.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("E, u. MMMM y", locale);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("H:m", locale);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", locale);
         tv_date.setText(dateFormat.format(calendar.getTime()));
         tv_time.setText(timeFormat.format(calendar.getTime()));
 
@@ -170,6 +174,14 @@ public class AddDialog extends AppCompatActivity {
             }
         });
 
+        //Daily switch
+        sw_daily = findViewById(R.id.sw_daily);
+        sw_daily.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                card.toggleDaily();
+            }
+        });
 
         //Swipe to delete
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

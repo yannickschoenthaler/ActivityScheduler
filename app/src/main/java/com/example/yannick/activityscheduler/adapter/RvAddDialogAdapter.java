@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -104,6 +105,13 @@ public class RvAddDialogAdapter extends RecyclerView.Adapter<RvAddDialogAdapter.
                 @Override
                 public void onClick(View view) {
                     simpleViewHolder.sw_status.toggle();
+                }
+            });
+
+            simpleViewHolder.sw_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    activity.toggleOnOff();
                 }
             });
 

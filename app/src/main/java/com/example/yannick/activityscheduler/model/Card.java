@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 public class Card implements Serializable {
     private String title;
-    private boolean activated;
+    private boolean activated, daily;
     private Calendar time;
     private ArrayList<CustomActivity> activities = new ArrayList<>();
 
@@ -32,6 +32,7 @@ public class Card implements Serializable {
         ret.setActivated(object.getBoolean("activated"));
         ret.setTitle(object.getString("title"));
         ret.setTime(object.getLong("time"));
+        ret.setDaily(object.getBoolean("daily"));
 
         JSONArray activityArray = object.getJSONArray("activities");
 
@@ -49,6 +50,7 @@ public class Card implements Serializable {
         ret.put("activated", activated);
         ret.put("title", title);
         ret.put("time", time.getTimeInMillis());
+        ret.put("daily", daily);
 
         JSONArray activityArray = new JSONArray();
         for (CustomActivity customActivity : activities) {
@@ -112,5 +114,17 @@ public class Card implements Serializable {
         time.set(Calendar.YEAR, year);
         time.set(Calendar.MONTH, month);
         time.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public boolean isDaily() {
+        return daily;
+    }
+
+    public void setDaily(boolean daily) {
+        this.daily = daily;
+    }
+
+    public void toggleDaily(){
+        daily = !daily;
     }
 }

@@ -11,6 +11,9 @@ import static com.example.yannick.activityscheduler.ActivityType.BLUETOOTH;
 
 public class CustomActivity implements Serializable {
     private boolean isExpanded = true;
+
+    //On or off
+    private boolean on = false;
     private ActivityType type = BLUETOOTH;
 
     public CustomActivity() {
@@ -36,11 +39,12 @@ public class CustomActivity implements Serializable {
         return isExpanded;
     }
 
-    public static CustomActivity fromJSON(JSONObject object) throws JSONException{
+    public static CustomActivity fromJSON(JSONObject object) throws JSONException {
         CustomActivity ret = new CustomActivity();
 
         ret.setExpanded(object.getBoolean("expanded"));
         ret.setType(ActivityType.valueOfId(object.getInt("type")));
+        ret.setOn(object.getBoolean("on"));
 
         return ret;
     }
@@ -50,7 +54,21 @@ public class CustomActivity implements Serializable {
 
         ret.put("expanded", isExpanded);
         ret.put("type", type.getId());
+        ret.put("on", on);
 
         return ret;
     }
+
+    public boolean isOn() {
+        return on;
+    }
+
+    public void setOn(boolean on) {
+        this.on = on;
+    }
+
+    public void toggleOnOff(){
+        on = !on;
+    }
+
 }
