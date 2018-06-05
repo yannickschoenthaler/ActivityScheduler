@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/cv_action_spacing"
-    android:paddingRight="@dimen/cv_action_spacing">
+    android:paddingRight="@dimen/cv_action_spacing"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
         android:layout_width="0dp"

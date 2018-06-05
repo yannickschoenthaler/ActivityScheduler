@@ -9,8 +9,10 @@ import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.yannick.activityscheduler.adapter.RvMainAdapter;
 import com.example.yannick.activityscheduler.model.Card;
@@ -65,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case ADD_DIALOG_RC: {
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     Serializable object = data.getSerializableExtra(getString(R.string.card_extra));
-                    if(object instanceof Card){
-                        items.add((Card)object);
+                    if (object instanceof Card) {
+                        Card card = (Card) object;
+                        items.add(card);
                         cardAdapter.notifyDataSetChanged();
                     }
                 }

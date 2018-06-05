@@ -1,96 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.MaterialComponents.CardView"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="@dimen/cv_elevation"
-    app:cardUseCompatPadding="true"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    card_view:cardCornerRadius="@dimen/cv_corner_radius">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_main_item"
+        style="@style/Widget.MaterialComponents.CardView"
+        app:cardElevation="@dimen/cv_elevation"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        card_view:cardCornerRadius="@dimen/cv_corner_radius"
+        android:layout_width="0dp"
         android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/cv_image_height"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/rv_picture"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_footer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/cv_action_spacing"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_picture">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_picture"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cl_footer">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/cv_image_height" />
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Title"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_footer"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_picture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/cv_action_spacing">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="@+id/cl_footer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_actions"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/cv_spacing_text_actions"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_text">
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:text="@string/cv_button_edit_string"
-                    android:id="@+id/bt_edit"
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_actions"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_text"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    app:layout_constraintLeft_toRightOf="@+id/bt_edit"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="@string/cv_button_delete_string"
-                    app:strokeWidth="@dimen/cv_button_stroke_width"
-                    app:strokeColor="@color/button_background"
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/bt_delete"/>
+                    android:layout_marginTop="@dimen/cv_spacing_text_actions">
 
-                <Switch
-                    android:id="@+id/sw_activate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/cv_action_spacing"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/bt_delete"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bt_edit"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="@string/cv_button_edit_string" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bt_delete"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        app:layout_constraintLeft_toRightOf="@+id/bt_edit"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeColor="@color/button_background"
+                        app:strokeWidth="@dimen/cv_button_stroke_width"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="@string/cv_button_delete_string" />
+
+                    <Switch
+                        android:id="@+id/sw_activate"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/bt_delete"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/cv_action_spacing" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
