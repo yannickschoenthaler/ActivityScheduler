@@ -21,6 +21,10 @@
     <string name="activity_volume_media">Media</string>
     <string name="activity_volume_alarm">Alarm</string>
     <string name="daily">Daily</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="wifi">WiFi</string>
+    <string name="airplane">Airplane</string>
+    <string name="ringtone">Ringtone</string>
 
     <string-array name="custom_activity_types">
         <item name="bluetooth">Bluetooth</item>

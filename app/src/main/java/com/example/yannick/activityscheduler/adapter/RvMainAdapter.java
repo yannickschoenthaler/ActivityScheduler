@@ -1,9 +1,11 @@
 package com.example.yannick.activityscheduler.adapter;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yannick.activityscheduler.ActivityType;
 import com.example.yannick.activityscheduler.R;
 import com.example.yannick.activityscheduler.model.Card;
 import com.example.yannick.activityscheduler.model.CustomActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -36,8 +40,8 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     public void onBindViewHolder(final CardViewHolder cardViewHolder, final int position) {
         final Context context = cardViewHolder.itemView.getContext();
         final Card c = cardList.get(position);
-        ArrayList<CustomActivity> activities = c.getActivities();
-        int activityCount = activities.size();
+        ArrayList<CustomActivity> activities = cardList.get(position).getActivities();
+
         cardViewHolder.title.setText(c.getTitle());
         cardViewHolder.activated.setChecked(c.isActivated());
 
@@ -48,11 +52,20 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
             }
         });
 
-        //Picture RecyclerView
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, activityCount);
-        RvPictureAdapter rv_picture_adapter = new RvPictureAdapter(activities);
-        cardViewHolder.rv_picture.setLayoutManager(gridLayoutManager);
-        cardViewHolder.rv_picture.setAdapter(rv_picture_adapter);
+        for(ActivityType activityType : ActivityType.values()){
+            cardViewHolder.itemView.findViewById(activityType.getChipId()).setVisibility(View.GONE);
+        }
+
+
+        for(CustomActivity activity : activities){
+            Chip chip = cardViewHolder.itemView.findViewById(activity.getType().getChipId());
+
+            if(activity.isOn()){
+                chip.setChipBackgroundColorResource(R.color.colorPrimary);
+            }
+
+            chip.setVisibility(View.VISIBLE);
+        }
 
         cardViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,12 +96,11 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
-        protected TextView title;
-        protected Switch activated;
-        protected MaterialButton edit;
-        protected MaterialButton delete;
-        protected RecyclerView rv_picture;
-
+        TextView title;
+        Switch activated;
+        MaterialButton edit;
+        MaterialButton delete;
+        Chip ch_bluetooth, ch_airplane, ch_ringtone, ch_wifi;
 
         public CardViewHolder(View v) {
             super(v);
@@ -96,7 +108,11 @@ public class RvMainAdapter extends RecyclerView.Adapter<RvMainAdapter.CardViewHo
             activated = v.findViewById(R.id.sw_activate);
             edit = v.findViewById(R.id.bt_edit);
             delete = v.findViewById(R.id.bt_delete);
-            rv_picture = v.findViewById(R.id.rv_picture);
+
+            ch_bluetooth = v.findViewById(R.id.ch_bluetooth);
+            ch_airplane = v.findViewById(R.id.ch_airplane);
+            ch_ringtone = v.findViewById(R.id.ch_ringtone);
+            ch_wifi = v.findViewById(R.id.ch_wifi);
 
         }
     }

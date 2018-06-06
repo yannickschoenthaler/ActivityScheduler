@@ -36,6 +36,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -142,8 +143,8 @@ public class AddDialog extends AppCompatActivity {
         }
 
         final Calendar calendar = card.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("E, u. MMMM y", locale);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", locale);
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("E, d. MMMM y", locale);
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", locale);
         tv_date.setText(dateFormat.format(calendar.getTime()));
         tv_time.setText(timeFormat.format(calendar.getTime()));
 
@@ -154,6 +155,8 @@ public class AddDialog extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         card.setDate(year, month, day);
+                        tv_date.setText(dateFormat.format(card.getTime().getTime()));
+
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -168,6 +171,7 @@ public class AddDialog extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         card.setTime(hour, minute);
+                        tv_time.setText(timeFormat.format(card.getTime().getTime()));
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
